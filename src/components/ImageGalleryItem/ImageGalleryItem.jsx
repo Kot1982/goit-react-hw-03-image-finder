@@ -1,11 +1,14 @@
+import {Img} from './ImageGalleryItem.styled'
 
-
-export const ImageGalleryItem = () => {
+export const ImageGalleryItem = ({onClick, largeImage, webformatURL}) => {
     return (
-       <> 
-<li class="gallery-item">
-  <img src="" alt="" />
-</li>
-            </>
+        <li 
+    
+        >
+  <Img  onClick={() => {
+          onClick(largeImage);
+            }}
+        src={webformatURL} alt="pict" />
+</li> 
     )
 }
