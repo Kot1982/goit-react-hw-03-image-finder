@@ -1,13 +1,14 @@
 import styled from "styled-components";
 
-export const List = styled.ul`
-    list-style: none;
-    display: grid;
- grid-template-columns: repeat(4, 1fr);
-    grid-column-gap: 16px;
-    grid-row-gap: 32px;
-
-`
-export const ImgModal = styled.img`
-width: 800px;
+export const GalleryImage = styled.ul `
+  display: grid;
+  max-width: calc(100vw - 48px);
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  grid-gap: 16px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding: 0;
+  list-style: none;
+  margin-left: auto;
+  margin-right: auto;
 `
