@@ -1,12 +1,12 @@
 import React from 'react';
 import ImageGallery from './ImageGallery/ImageGallery';
-import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 import Searchbar from './Searchbar/Searchbar';
 import Modal from './Modal/Modal';
 import LoadMore from './Button/Button';
 import LoaderSpiner from './Loader/Loader';
 import toast from 'react-hot-toast';
 import api from 'services/api';
+import { mapper } from 'helpers/mapper';
 
 export default class App extends React.Component {
   state = {
@@ -14,7 +14,7 @@ export default class App extends React.Component {
     pictureData: '',
     pictureModal: '',
     status: 'idle',
-    page: 1,    
+    page: 1,
   };
 
   componentDidUpdate(prevState, prevProps) {
@@ -22,7 +22,6 @@ export default class App extends React.Component {
     const nextSearch = this.state.pictureName;
     const prevPage = prevProps.page;
     const nextPage = this.state.page;
-    
 
     if (prevSearch !== nextSearch) {
       this.loadPicture();
@@ -40,7 +39,7 @@ export default class App extends React.Component {
       .fetchPicture(pictureName, page)
       .then(res => {
         this.setState(prevState => ({
-          pictureData: [...prevState.pictureData, ...res.data.hits],
+          pictureData: [...prevState.pictureData, ...mapper(res.data.hits)],
           status: 'resolved',
         }));
         if (res.data.hits.length === 0) {
@@ -67,7 +66,7 @@ export default class App extends React.Component {
       pictureModal: picture,
     });
   };
-  
+
   closeModal = () => {
     this.setState({
       pictureModal: '',
@@ -90,16 +89,14 @@ export default class App extends React.Component {
     const { status, pictureData, pictureModal } = this.state;
     return (
       <div>
-        <Searchbar onSubmit={this.handleFormSubmit} />
-        {status === 'pending' && <LoaderSpiner />}
+        <Searchbar onSubmit={this.handleFormSubmit} />        
         {pictureData.length > 0 && (
-          <ImageGallery>
-            <ImageGalleryItem
-              pictureData={pictureData}
-              onClick={this.pictureModalClick}
-            />
-          </ImageGallery>
+          <ImageGallery
+            pictureData={pictureData}
+            onClick={this.pictureModalClick}
+          ></ImageGallery>
         )}
+        {status === 'pending' && <LoaderSpiner />}
         {pictureData.length > 0 && <LoadMore onClick={this.loadMore} />}
         {pictureModal.length > 0 && (
           <Modal onClose={this.closeModal}>

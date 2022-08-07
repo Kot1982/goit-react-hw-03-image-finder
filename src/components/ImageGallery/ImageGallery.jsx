@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types';
-import { GalleryImage } from "./ImageGallery.styled";
+import { List } from "./ImageGallery.styled";
+import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
 
-const ImageGallery = ({ children }) => (
-  <GalleryImage>{children}</GalleryImage>
+const ImageGallery = ({ pictureData, onClick }) => (
+  <List>{pictureData.map(({ id, largeImageURL, webformatURL }) => (<ImageGalleryItem
+    key={id}
+    largeImageURL={largeImageURL}
+    webformatURL={webformatURL}
+    onClick={onClick} />))}</List>
 );
 
 export default ImageGallery;
 
 ImageGallery.propTypes = {
-  children: PropTypes.object,
+  pictureData: PropTypes.array.isRequired,
+  onClick: PropTypes.func.isRequired,
 };

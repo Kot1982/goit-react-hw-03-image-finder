@@ -7,7 +7,9 @@ const modalRoot = document.querySelector('#modal-root');
 
 export default class Modal extends Component {
 
-  static propTypes = { children: PropTypes.node.isRequired };
+  static propTypes = {
+    children: PropTypes.node.isRequired,
+    onClose: PropTypes.func.isRequired,};
 
   componentDidMount() {
     window.addEventListener('keydown', this.handleKeyDown);
